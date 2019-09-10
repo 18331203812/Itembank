@@ -129,5 +129,19 @@ vue常见面试题
         同源策略(Same origin policy)是一种约定,它是浏览器最核心也最基本的安全功能.如果缺少了同源策略,则浏览器的正常功能             可能都会受到影响 可以说 Web 是构建在同源策略基础之上的,浏览器只是针对同源策略的一种实现
         因为存在浏览器同源策略,所以才会有跨域问题
     14.axios解决跨域
+        首先在main.js中,配置下我们访问的Url前缀:Axios.defaults.baseURL = '/api';
+        配置代理 : 修改config文件夹下的index.js文件，在proxyTable中加上如下代码:
+            '/api':{
+                target: "https://www.v2ex.com/api",
+                    changeOrigin:true,
+                    pathRewrite:{
+                    '^/api':''
+                }
+            }
+        修改请求Url:修改刚刚的axios请求，把url修改如下
+        因为我们给url加上了前缀 /api，我们访问 http://127.0.0.1:19323/site/info.json 就当于访问了：http://127.0.0.1:19323/api/site/info.json。(假设本地访问端口号为 19323)
+                又因为在 index.js 中的 proxyTable 中拦截了 /api ,并把 /api 及其前面的所有替换成了 target 中的内容，因此实际访问 Url 是https://www.v2ex.com/api/site/info.json。
+
+
 
 
