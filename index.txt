@@ -415,4 +415,146 @@ vue常见面试题
 			toUp() {
 			  this.bus.$emit('send', 'down来消息了')
 			}
-	48.
+	48.params和query的区别
+		query要用path来引入，params要用name来引入，接收参数都是类似的，分别是this.$route.query.name和this.$route.params.name。
+		注意接收参数的时候，已经是$route而不是$router了哦！！
+		query更加类似于我们ajax中get传参，params则类似于post，说的再简单一点，前者在浏览器地址栏中显示参数，后者则不显示
+	49.vue初始化页面闪动问题
+		v-cloak指令和css规则如[v-cloak]{display:none}一起用时，这个指令可以隐藏未编译的Mustache标签直到实例准备完毕。
+		v-text vue中我们会将数据包在两个大括号中，然后放到HTML里，但是在vue内部，所有的双括号会被编译成textNode的一个v-text指令。
+	50.vue更新数组时触发视图更新的方法
+		push() 方法可向数组的末尾添加一个或多个元素，并返回新的长度。
+		pop() 方法用于删除最后一个元素，把数组长度减 1，并且返回它删除的元素的值。
+		shift() 方法用于把数组的第一个元素从其中删除，并返回第一个元素的值。
+		unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度。
+		splice() 方法向/从数组中添加/删除项目，然后返回被删除的项目。 该方法会改变原始数组。
+		sort() 方法用于对数组的元素进行排序。
+		reverse() 方法用于颠倒数组中元素的顺序。
+		Vue.set() 响应式新增与修改数据
+	51.vue常用的UI组件库
+		 iView UI组件库 (https://www.iviewui.com/)
+		 Vux UI组件库 (https://vux.li/)
+		 Element UI组件库 (http://element.eleme.io/#/zh-CN)
+		 Mint UI组件库 (http://mint-ui.github.io/#!/zh-cn)
+		 Bootstrap-Vue UI组件库 (https://bootstrap-vue.js.org/)
+		 Ant Design Vue UI组件库 (https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/)
+		 AT-UI UI组件库 (https://at-ui.github.io/at-ui/#/zh)
+		 Vant UI组件库 (https://youzan.github.io/vant/#/zh-CN/intro)
+		 cube-ui UI组件库 (https://didi.github.io/cube-ui/#/zh-CN)
+		 Muse-UI UI组件库 (https://muse-ui.org/#/zh-CN)
+		 N3-components UI组件库 (https://n3-components.github.io/N3-components/component.html)
+		 Mand Mobile(https://didi.github.io/mand-mobile/#/zh-CN/home)
+	52.vue如何引进本地背景图片
+		vue在data引入本地图片(在img元素中用：src绑定地址的)
+		直接在CSS样式中引用的
+	53. vue如何引进sass
+		安装sass的依赖包 (npm install --save-dev sass-loader)
+		进入build文件，在webpack.base.config.js中module.rules配置
+		修改components目录中的Hello.vue文件的style标签 (<style lang='scss'><style>)
+	54.vue修改打包后静态资源路径的修改
+		我们只需要修改编译后的环境，所以只要修改prod.env.js下的build属性下的assetsPublicPath属性
+		默认值是 "/" 根目录
+		我这里加了一级 "/mywebsite/"
+		最终页面上请求到的静态资源路径，比如css文件的地址就是：
+		http://www.***.cn/mywebsite/static/css/index****.css
+
+vuex常见面试题
+	1.vuex是什么？怎么使用？哪种功能场景使用它？
+		vue框架中状态管理。
+		在main.js引入store，注入。
+		场景有：单页应用中，组件之间的状态。音乐播放、登录状态、加入购物车
+	2.vuex有哪几种属性
+		state => 基本数据 
+		getters => 从基本数据派生的数据 
+		mutations => 提交更改数据的方法，同步！ 
+		actions => 像一个装饰器，包裹mutations，使之可以异步。 
+		modules => 模块化Vuex
+	3.Vue.js中ajax请求代码应该写在组件的methods中还是vuex的actions中？
+		如果您使用vuex的话，建议您存入vuex中，因为actions可以执行异步操作。同上，简单的页面放在methods里面即可。
+		比较复杂，或者重要建议放在vuex中，容易维护，代码清晰,并且调用简单，这个在项目后期很重要。
+	4.Vuex中如何异步修改状态
+		在调用vuex中的方法action的时候，用promise实现异步修改
+	5.Vuex中actions和mutations的区别
+		action主要处理的是异步的操作，mutation必须同步执行，而action就不受这样的限制，也就是说action中我们既可以处理同步，
+		也可以处理异步的操作
+		action改变状态，最后是通过提交mutation
+
+二.ES6面试题
+	
+ES6新增方法面试题
+	1.let const var比较
+		var定义的变量，没有块的概念，可以跨块访问, 不能跨函数访问。
+		let定义的变量，只能在块作用域里访问，不能跨块访问，也不能跨函数访问。
+		const用来定义常量，使用时必须初始化(即必须赋值)，只能在块作用域里访问，而且不能修改。
+		(全局作用域 函数作用域 块级作用域)
+	2.反引号（`）标识
+		普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。
+	3.函数默认参数
+		 var f = function (a = 10,b = 10,c = 2a+b) {
+            console.log(a+b)
+            console.log(c)
+         };
+		f();
+	4.箭头函数
+		箭头函数this为父作用域的this，不是调用时的this
+		箭头函数不能作为构造函数，不能使用new
+		箭头函数返回对象时，要加一个小括号
+		箭头函数没有arguments，caller，callee
+		箭头函数通过call和apply调用，不会改变this指向，只会传入参数
+		箭头函数没有原型属性
+	5.属性简写
+		同名的属性可以省略不写用"," 代替
+	6.Object.keys()方法，获取对象的所有属性名或方法名
+		用Object.keys()方法获取属性对应的值
+		该方法可获得对象的属性名，返回一个数组
+	7.import和export
+		import语句用于导入由另一个模块导出的绑定。	
+		用于在创建JavaScript模块时，从模块中导出函数、对象或原始值，一边其他程序可以通过import语句使用它们。
+	8.Promise对象
+		promise是异步编程的一种解决方法。
+		是一个构造函数，这个构造函数里有两个参数，分别是：resolve（成功之后的回调函数）、reject（失败之后的回调函数）。
+		Pending：进行中
+		Resolved(Fulfilled)：已完成
+		Rejected：已失败
+		所谓promise，简单说是一个容器，里面保存着某个未来才会结束的事件（通常是一个异步操作）的结果，
+		从语法上说，promise是一个对象，从它可以获取异步操作的消息，promise提供了统一的API，
+		各种异步操作都可以用同样的方法进行处理。
+	9.解构赋值
+		let [a, b, c] = [1, 2, 3] // a=1, b=2, c=3
+		let {a, b} = {a: 'aaaa', b: 'bbbb'} // a='aaaa' b='bbbb'
+	10.set数据结构（可用于快速去重）
+		类似于数组，但是成员的值都是唯一的，没有重复。Set本身是一个构造函数，用来生成Set数据结构
+		const s = new Set();
+		[2, 3, 5, 4, 5, 2, 2].forEach(x => s.add(x));
+	11.Spread Operator 展开运算符(...)
+		(1).组装对象或者数组
+			//数组
+			const color = [ 'red' , 'yellow' ]
+			const colorful = [...color, 'green' , 'pink' ]
+			console.log(colorful)
+
+			//对象
+			const alp = { first:'a',second:'b' }
+			const alphabets = { ...alp,third: 'c'}
+			
+ES6数组面试题
+	1.forEach()
+		forEach():遍历数组,并为每个元素调用传入的函数; 举例:
+	2.map()
+		方法返回一个新数组，数组中的元素为原始数组元素调用函数处理后的值。
+	3.filter()
+		判断数组中是否存在某个值 方法返回一个新数组，
+	4.reduce()
+		reduce() 方法接收一个函数作为累加器,reduce 为数组中的每一个元素依次执行回调函数，
+		不包括数组中被删除或从未被赋值的元素，接受四个参数：初始值（上一次回调的返回值），当前元素值，当前索引，原数组 
+	5.some()
+		方法用于检测数组中的元素是否满足指定条件（函数提供）。
+		some()是对数组中每一项运行给定函数，如果该函数对任一项返回true，则返回true。
+	6.every()
+		方法用于检测数组所有元素是否都符合指定条件（通过函数提供）。
+		every()是对数组中每一项运行给定函数，如果该函数对每一项返回true,则返回true。
+	7.all()方法
+		Promise.all方法用于将多个 Promise 实例，包装成一个新的 Promise 实例。
+
+js面试题
+	
