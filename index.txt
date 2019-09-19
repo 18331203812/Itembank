@@ -773,4 +773,186 @@ js面试题
 		undefined、null、string、number、boolean、symbol(es6新增)
 		null其实并不是一个对象，尽管typeof null 输出的是object,但是这其实是一个bug。在js最初的版本中使用的是32位系统，
 		为了性能考虑地位存储变量的类型信息，000开头表示为对象类型，然而null为全0，故而null被判断为对象类型。
-	30
+	30.如何判断this？箭头函数的this是什么
+		箭头函数：出现的作用除了让函数的书写变得很简洁，可读性很好外；最大的优点是解决了this执行环境所造成的一些问题。
+		比如：解决了匿名函数this指向的问题（匿名函数的执行环境具有全局性），包括setTimeout和setInterval中使用this所造成的问题。
+		谁调用函数 谁就是this
+	31.== 和 ===的区别
+		== 表示相等 （值相等）
+		===表示恒等（类型和值都要相等）
+		js在比较的时候如果是 == 会先做类型转换，再判断值得大小，如果是===类型和值必须都相等。
+	32.什么是闭包
+		简单讲，闭包就是指有权访问另一个函数作用域中的变量的函数。
+		它由两部分构成：函数，以及创建该函数的环境。环境由闭包创建时在作用域中的任何局部变量组成。
+		外部函数调用之后其变量对象本应该被销毁，但闭包的存在使我们仍然可以访问外部函数的变量对象，这就是闭包的重要概念。
+	33.JavaScript原型，原型链 ? 有什么特点？
+		原型:JS中每个函数都存在有一个原型对象属性prototype。并且所有函数的默认原型都是Object的实例。
+		原型链:简单理解就是原型组成的链，对象的__proto__它的是原型，而原型也是一个对象，也有__proto__属性，
+			原型的__proto__又是原型的原型，就这样可以一直通过__proto__想上找，这就是原型链，
+			当向上找找到Object的原型的时候，这条原型链就算到头了。
+	34.typeof()和instanceof()的用法区别
+		typeof（） 是一个一元运算，放在一个运算数之前，运算数可以是任意类型。
+		instanceof 用于判断一个变量是否某个对象的实例，如var a=new Array();alert(a instanceof Array);
+		会返回true，同时alert(a instanceof Object)也会返回true;这是因为Array是object的子类
+	35.ES6新的特性有哪些？
+		不一样的变量声明：const和let
+		模板字符串
+		箭头函数（Arrow Functions）
+		函数的参数默认值
+		Spread / Rest 操作符
+		二进制和八进制字面量
+		对象和数组解构
+		对象超类
+		for…of 和 for…in
+		ES6中的类
+	36.promise 有几种状态, Promise 有什么优缺点 ?
+		* pending：初始状态，既不是成功也不是失败
+		* fulfilled：意味着操作完全成功
+		* rejected：意味着操作失败
+		Promise对象的缺点：
+		1、无法取消Promise，一旦新建它就会立即执行，无法中途取消。
+		2、如果不设置回调函数，Promise内部抛出的错误，不会反应到外部。
+		3、当处于Pending状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。
+		4、Promise 真正执行回调的时候，定义 Promise 那部分实际上已经走完了，所以 Promise 的报错堆栈上下文不太友好。
+		Promise对象的优点：
+		promise主要解决回调地狱问题
+		使得原本的多层级的嵌套代码，变成了链式调用
+		让代码更清晰，减少嵌套数
+	37.Promise构造函数是同步还是异步执行，then呢 ?promise如何实现then处理 ?
+		异步执行
+	38.Promise和setTimeout的区别 ?
+		promise比settimeout先执行的
+		原因：promise的任务会在当前事件循环末尾中执行，而settimeout中的任务是在下一次事件循环中执行。
+		所以异步操作不是一个新事件添加到事件循环队列，而是就在当前任务队里末尾添加。
+		这里的promise异步操作就添加到了当前任务队的末尾了，而settimeout则是下一个事件中的任务了。
+	39.如何实现 Promise.all ?
+		Promise.all()接收一个数组为参数，当数组的所有Promise都为resolve的状态时，Promise.all()才会成功；
+		若有一个失败，都会被认为是失败的。
+	40.如何实现 Promise.finally ?
+		不管promise最后的状态，在执行完then或catch指定的回调函数以后，都会执行finally方法指定的回调函数。
+	41.如何判断img加载完成
+		load事件
+			$('img').onload = function() {
+			//code
+			}
+		readystatechange事件
+			img.onreadystatechange = function() {
+				if(img.readyState=="complete"||img.readyState=="loaded"){ 
+					p.innerHTML = 'readystatechange:loaded'
+				}
+			}
+		img的complete属性
+		function imgLoad(img, callback) {
+			var timer = setInterval(function() {
+				if (img.complete) {
+					callback(img)
+					clearInterval(timer)
+				}
+			}, 50)
+			}
+			imgLoad(img1, function() {
+			p1.innerHTML('加载完毕')
+		})
+	42.如何阻止冒泡？
+		// 阻止浏览器的默认行为
+		window.event? window.event.returnValue=false :e.preventDefault();
+
+		//停止事件冒泡
+		window.event?window.event.cancelBubble=true:e.stopPropagation();
+	43.ajax请求时，如何解释json数据
+		json是一种轻量级交互格式,本质上都是字符串,常用于前后端的数据交互,本质上就是字符串.
+		前端在解析后端发来的数据,使用JSON.parse()方法把字符串转为json对象.
+		前端在向后端发送数据,使用JSON.stringify()方法把json对象转为字符串. 
+	44. json和jsonp有什么差异？
+		json返回的是一串数据；而jsonp返回的是脚本代码（包含一个函数调用）；
+		JSON其实就是JavaScript中的一个对象，json其实就是JavaScript中的对象(Object)和数组(Array，其实也是对象)相互嵌套，
+		以此模拟出许多复杂的数据结构。
+		jsonp全名叫做json with padding，很形象，就是把json对象用符合js语法的形式包裹起来以使其它网站可以请求得到，
+		也就是将json数据封装成js文件；
+		json是理想的数据交换格式，但没办法跨域直接获取，于是就将json包裹(padding)在一个合法的js语句中作为js文件传过去。
+		这就是json和jsonp的区别，json是想要的东西，jsonp是达到这个目的而普遍采用的一种方法，当然最终获得和处理的还是json。所以说json是目的，jsonp只是手段。json总会用到，而jsonp只有在跨域获取数据才会用到。
+		json和jsonp虽然只有一个字母的区别，但是它们之间扯不上关系。 json是一种轻量级的数据交换格式。
+		jsonp是一种跨域数据交互协议。 
+		json的优点：（1）基于纯文本传递极其简单，（2）轻量级数据格式适合互联网传递，（3）容易编写和解析。
+	45.浏览器是如何渲染页面的？
+		处理HTML标记并构建DOM树
+		处理CSS标记并构建CSSOM树
+		将DOM与CSSOM合并成一个渲染树
+		根据渲染树来布局，计算每个节点的布局信息
+		将各个节点绘制到屏幕上
+	46.XMLHttpRequest：XMLHttpRequest.readyState;状态码的意思
+		1**	信息，服务器收到请求，需要请求者继续执行操作
+		2**	成功，操作被成功接收并处理
+		3**	重定向，需要进一步的操作以完成请求
+		4**	客户端错误，请求包含语法错误或无法完成请求
+		5**	服务器错误，服务器在处理请求的过程中发生了错误
+	47.http请求的状态吗
+		1**	信息，服务器收到请求，需要请求者继续执行操作
+		2**	成功，操作被成功接收并处理
+		3**	重定向，需要进一步的操作以完成请求
+		4**	客户端错误，请求包含语法错误或无法完成请求
+		5**	服务器错误，服务器在处理请求的过程中发生了错误
+	48.document.write和innerHTML的区别
+		执行结果显示：document.write会将页面上的所有内容清除包括标题。
+		执行结果显示：innerHTML只会重写所属元素的内容，即<div>元素中的内容。
+
+浏览器/html/css面试题
+	1.什么是盒模型
+		在网页中，一个元素占有空间的大小由几个部分构成，其中包括元素的内容（content），元素的内边距（padding），
+		元素的边框（border），元素的外边距（margin）四个部分。这四个部分占有的空间中，有的部分可以显示相应的内容，
+		而有的部分只用来分隔相邻的区域或区域。4个部分一起构成了css中元素的盒模型。
+	2.行内元素有哪些？块级元素有哪些？ 空(void)元素有那些？行内元素和块级元素有什么区别？
+		行内元素：a、b、span、img、input、strong、select、label、em、button、textarea
+		块级元素：div、ul、li、dl、dt、dd、p、h1-h6、blockquote
+		空元素：即系没有内容的HTML元素，例如：br、meta、hr、link、input、img
+		行内元素不可以设置宽高，不独占一行;
+		块级元素可以设置宽高，独占一行。
+	3.简述src和href的区别
+		src 是指向物件的来源地址，是引入。在 img、script、iframe 等元素上使用。
+		href 是超文本引用，指向需要连结的地方，是与该页面有关联的，是引用。在 link和a 等元素上使用。
+	4.什么是css Hack
+		CSS hack：由于不同厂商的浏览器，比如Internet Explorer,Safari,Mozilla Firefox,Chrome等，
+		或者是同一厂商的浏览器的不同版本，如IE6和IE7，对CSS的解析认识不完全一样，因此会导致生成的页面效果不一样，
+		得不到我们所需要的页面效果。 这个时候我们就需要针对不同的浏览器去写不同的CSS，让它能够同时兼容不同的浏览器，
+		能在不同的浏览器中也能得到我们想要的页面效果。
+	5.什么叫优雅降级和渐进增强
+		优雅降级：Web站点在所有新式浏览器中都能正常工作，如果用户使用的是老式浏览器，
+		则代码会检查以确认它们是否能正常工作。由于IE独特的盒模型布局问题，针对不同版本的IE的hack实践过优雅降级了,
+		为那些无法支持功能的浏览器增加候选方案，使之在旧式浏览器上以某种形式降级体验却不至于完全失效.
+		渐进增强：从被所有浏览器支持的基本功能开始，逐步地添加那些只有新式浏览器才支持的功能,
+		向页面增加无害于基础浏览器的额外样式和功能的。当浏览器支持时，它们会自动地呈现出来并发挥作用。
+	6.px和em和rem的区别
+		(1).PX是Pixel的缩写，也就是说像素是指基本原色素及其灰度的基本编码，
+		由 Picture(图像) 和 Element（元素）这两个单词的字母所组成的，如同摄影的相片一样，数码影像也具有连续性的浓淡阶调。
+		若把影像放大数倍，会发现这些连续色调其实是由许多色彩相近的小方点所组成，这些小方点就是构成影像的最小单位“像素”。
+		(2).em单位名称为相对长度单位。相对于当前对象内文本的字体尺寸，国外使用比较多。
+		<em>(emphasize) 标签告诉浏览器把其中的文本表示为强调的内容。对于所有浏览器来说，这意味着要把这段文字用斜体来显示。
+		(3).REM是相对单位，是相对HTML根元素。这个单位可谓集相对大小和绝对大小的优点于一身，
+		通过它既可以做到只修改根元素就成比例地调整所有字体大小，又可以避免字体大小逐层复合的连锁反应。
+		目前，除了IE8及更早版本外，所有浏览器均已支持rem。
+	7.一次完整的HTTP事务是怎么一个过程
+		域名解析 --> 发起TCP的3次握手 --> 建立TCP连接后发起http请求 --> 服务器响应http请求，
+		浏览器得到html代码 --> 浏览器解析html代码，并请求html代码中的资源（如js、css、图片等） --> 
+		浏览器对页面进行渲染呈现给用户
+	8.HTTPS是如何实现加密
+		1，服务端生成jks文件，并导出只含公钥的ser文件给服务端
+		2，客户端用ser文件生成自己的bks文件，用来验证服务端的消息
+		3，客户端自己生成pfx文件，并导出只含公钥的ser文件给服务端
+		4，服务端用客户端的ser文件进行验证来自客户端的消息
+	9.浏览器是如何渲染页面的？
+		处理HTML标记并构建DOM树
+		处理CSS标记并构建CSSOM树
+		将DOM与CSSOM合并成一个渲染树
+		根据渲染树来布局，计算每个节点的布局信息
+		将各个节点绘制到屏幕上
+	10.浏览器的内核有哪些？分别有什么代表的浏览器
+		Trident内核：IE最先开发或使用的，也称IE内核，360浏览器使用的也是IE内核；
+		Webkit内核：谷歌chrome浏览器最先开发或使用，也叫谷歌内核，枫树浏览器、太阳花使用的也是谷歌内核；
+		Gecko内核： Netscape6开始采用的内核，后来的Mozilla FireFox (火狐浏览器) 也采用了该内核，K-Meleon浏览器也是使用这种内核；
+		Presto内核：目前只有Opera浏览器采用该内核
+	11.页面载入时，link和@import有什么区别？
+	   （1）link属于xhtml标签，除了加载css之外，还能用于定义RSS,定义rel连接属性等作用而@import是css提供的只用于加载css
+	   （2）页面加载时，link会同时被加载；@import引用css会等页面加载完毕之后在加载
+	   （3）@import只有ie5以上浏览器才兼容，而link属于xhtml无兼容问题
+	12.如何优化图像，图像格式的区别
+		
